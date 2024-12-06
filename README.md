@@ -1,3 +1,12 @@
+#怎么用
+照着readme把install dependecies和add directory to pythonpath做完
+复制readme里面提到的第二个代码，也就是merge
+放在task-vectors或者task-vectors/src下都可以，主要看编译器在哪里不会报错，报错的原因就是import的时候它认相对路径还是绝对路径，报错就需要去修改import的路径
+我自己是放在task-vectors下的
+在merge.py同路径下新增checkpoints文件夹，把模型如vit-l-14的zip放进去然后解压
+注意到模型自带8个数据集的，建立和这些数据集同名的文件夹，这个建哪里我忘记看什么了，我自己是建在task-vectors/src下的
+然后把下载的数据集放进去，每个数据集的格式要求不一样，一些要val一些要test.一般来说它报什么错就跟着改就行
+
 # Editing Models with Task Arithmetic
 
 This repository contains code for the ICLR 2023 paper [Editing Models with Task Arithmetic](https://arxiv.org/abs/2212.04089), by Gabriel Ilharco, Marco Tulio Ribeiro, Mitchell Wortsman, Suchin Gururangan, Ludwig Schmidt, Hannaneh Hajishirzi and Ali Farhadi.
