@@ -1,10 +1,62 @@
-照着以下readme把install dependecies和add directory to pythonpath做完
-复制readme里面提到的第二个代码，也就是merge
-放在task-vectors或者task-vectors/src下都可以，主要看编译器在哪里不会报错，报错的原因就是import的时候它认相对路径还是绝对路径，报错就需要去修改import的路径
-我自己是放在task-vectors下的
-在merge.py同路径下新增checkpoints文件夹，把模型如vit-l-14的zip放进去然后解压
-注意到模型自带8个数据集的，建立和这些数据集同名的文件夹，这个建哪里我忘记看什么了，我自己是建在task-vectors/src下的
-然后把下载的数据集放进去，每个数据集的格式要求不一样，一些要val一些要test.一般来说它报什么错就跟着改就行
+第一步，参考readme把install dependecies
+
+```bash
+conda env create
+conda activate task-vectors
+```
+
+和add directory to pythonpath做完
+
+```bash
+cd task_vectors
+export PYTHONPATH="$PYTHONPATH:$PWD"
+```
+
+第二步，创建如下代码：merge.py，参考readme的最后部分
+import torch
+from task_vectors import TaskVector
+from eval import eval_single_dataset
+from args import parse_arguments
+
+# Config
+datasets = ['MNIST', 'RESISC45']
+model = 'ViT-L-14'
+args = parse_arguments()
+args.data_location = '/path/to/data'
+args.model = model
+args.save = f'checkpoints/{model}'
+pretrained_checkpoint = f'checkpoints/{model}/zeroshot.pt'
+
+# Create the task vectors
+task_vectors = [
+    TaskVector(pretrained_checkpoint, f'checkpoints/{model}/{dataset}/finetuned.pt')
+    for dataset in datasets
+]
+# Sum the task vectors
+task_vector_sum = sum(task_vectors)
+# Apply the resulting task vector
+image_encoder = task_vector_sum.apply_to(pretrained_checkpoint, scaling_coef=0.8)
+# Evaluate
+for dataset in datasets:
+    eval_single_dataset(image_encoder, dataset, args)
+
+第三步
+把上面的merge.py放在task_vectors下
+此时还没有加载数据集，可以先运行代码把其中import环节存在的路径拼写错误给改掉。
+
+第四步
+在merge.py同路径下创建checkpoints文件夹
+把vit-l-14模型放入并解压
+(https://drive.google.com/drive/folders/1u_Tva6x0p6oxu5Eo0ZZsf-520Cc_3MKw?usp=share_link)
+
+
+第五步
+链接：https://pan.baidu.com/s/1ndScveTjqd0lE6At_uYNYw?pwd=7ji4 
+提取码：7ji4 
+--来自百度网盘超级会员V3的分享
+解压我发的数据集在task-vectors/src下
+数据集我已经调整过了结构，理论上是可以直接使用的
+
 
 # Editing Models with Task Arithmetic
 
