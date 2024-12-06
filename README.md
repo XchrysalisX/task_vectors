@@ -1,5 +1,4 @@
-#怎么用
-照着readme把install dependecies和add directory to pythonpath做完
+照着以下readme把install dependecies和add directory to pythonpath做完
 复制readme里面提到的第二个代码，也就是merge
 放在task-vectors或者task-vectors/src下都可以，主要看编译器在哪里不会报错，报错的原因就是import的时候它认相对路径还是绝对路径，报错就需要去修改import的路径
 我自己是放在task-vectors下的
