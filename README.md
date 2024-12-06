@@ -12,7 +12,8 @@ cd task_vectors
 export PYTHONPATH="$PYTHONPATH:$PWD"
 ```
 
-第二步，创建如下代码：merge.py，参考readme的最后部分
+第二步，创建如下代码：merge.py，参考readme的最后部分：
+```
 import torch
 from task_vectors import TaskVector
 from eval import eval_single_dataset
@@ -39,6 +40,7 @@ image_encoder = task_vector_sum.apply_to(pretrained_checkpoint, scaling_coef=0.8
 # Evaluate
 for dataset in datasets:
     eval_single_dataset(image_encoder, dataset, args)
+```
 
 第三步
 把上面的merge.py放在task_vectors下
